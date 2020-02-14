@@ -1,7 +1,11 @@
+
+
 public class Party {
+    private static final double AVG_WEIGHT = 137.00;
+
     private int numPeople;
     private double weight;
-    private boolean isHandicapped;
+    private boolean handicapped;
 
     public Party(int numPeople, double weight, boolean isHandicapped) {
         this.numPeople = numPeople;
@@ -9,7 +13,7 @@ public class Party {
 
     }
 
-    public int getPeople() {
+    public int getNumPeople() {
         return numPeople;
     }
 
