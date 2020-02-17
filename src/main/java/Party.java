@@ -3,21 +3,31 @@
 public class Party {
     private static final double AVG_WEIGHT = 137.00;
 
+
     private int numPeople;
     private double weight;
     private boolean handicapped;
 
     public Party(int numPeople, double weight, boolean isHandicapped) {
+        if(numPeople < 0||weight < 0 ){
+            throw new IllegalArgumentException();
+        }
         this.numPeople = numPeople;
         this.weight = weight;
         handicapped = isHandicapped;
     }
 
     public Party(int numPeople) {
+        if(numPeople<0) {
+            throw new IllegalArgumentException();
+        }
         this.numPeople = numPeople;
     }
 
     public Party(int numPeople, double weight) {
+        if(numPeople<0 || weight<0){
+            throw new IllegalArgumentException();
+        }
         this.numPeople = numPeople;
         this.weight = weight;
     }
