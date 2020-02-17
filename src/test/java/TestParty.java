@@ -36,7 +36,7 @@ public class TestParty {
     public void testIllegalWeight() {
         try {
             Party p1 = new Party(2, 0);
-            Party p2 = new Party(5, -12.8)
+            Party p2 = new Party(5, -12.8);
             Assert.fail("Expected IllegalArgumentException");
         } catch (IllegalArgumentException e) {
             //error caught, success
