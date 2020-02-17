@@ -22,6 +22,7 @@ public class Party {
             throw new IllegalArgumentException();
         }
         this.numPeople = numPeople;
+        weight = AVG_WEIGHT*numPeople;
     }
 
     public Party(int numPeople, double weight) {
