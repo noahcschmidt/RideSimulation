@@ -43,7 +43,7 @@ public class TestLine {
     }
 
     @Test
-    public void testAddEror() {
+    public void testAddError() {
         Party p1 = new Party(0);
         Party p2 = new Party(3);
         Party p3 = null;
