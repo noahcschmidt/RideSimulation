@@ -1,12 +1,9 @@
-
 import java.util.*;
-
 
 public class Line {
 
     private Queue<Integer> line;
     private int current;
-
 
     //get the length
     public int length() {
@@ -17,12 +14,9 @@ public class Line {
     }
 
     //add to the line
-    public void addTo(){
-        if(hasNext() == true){
-            line.add(current);
-        }
+    public void addTo(int num){
+        line.add(num);
     }
-
 
     //remove complete line
     public void emptyLine() {
