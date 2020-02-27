@@ -1,35 +1,58 @@
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 
-public class Line extends Party{
+public class Line {
+
+    private Queue<Integer> line;
+    private int current;
 
 
-    //get number of people form Party
-    @Override
-    public int getNumPeople() {
-        return super.getNumPeople();
+    //get the length
+    public int length() {
+        if (line.isEmpty()) {
+            return 0;
+        }
+        return length();
     }
 
-    //put the party number into a queue
-    public Line(int numPeople){
-        super(numPeople);
+    //add to the line
+    public void addTo(){
+        if(hasNext() == true){
+            line.add(current);
+        }
     }
 
-    public int length(Queue<Integer> line) {
 
-        int size = line.size();
-        return size;
+    //remove complete line
+    public void emptyLine() {
+        line.removeAll(line);
     }
 
-    public void add(Party p1) {
-        Queue<Integer> line = new LinkedList<>();
-        line.add(getNumPeople());
-
-
+    //only to check if there is a next party
+    public boolean hasNext() {
+        if (line.size() != 0) {
+            return true;
+        }
+        return false;
     }
+
+    //next party but not removing
+    public int peek() {
+        if (line.isEmpty()) {
+            return 0;
+        } else {
+            return line.peek();
+        }
+    }
+
+    //remove current party and make next party the current
+    public void remove(){
+        if(!line.isEmpty()){
+            current = 0;
+            line.remove(current);
+            current++;
+        }
+    }
+
 }
-
