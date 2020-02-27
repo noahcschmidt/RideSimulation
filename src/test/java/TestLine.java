@@ -34,11 +34,11 @@ public class TestLine {
 
         Line a = new Line();
         Assert.assertEquals(a.length(), 0);
-        a.add(p1);
+        a.addTo(p1);
         Assert.assertEquals(a.length(), 5);
-        a.add(p2);
+        a.addTo(p2);
         Assert.assertEquals(a.length(), 6);
-        a.add(p3);
+        a.addTo(p3);
         Assert.assertEquals(a.length(), 9);
     }
 
