@@ -34,11 +34,11 @@ public class TestLine {
 
         Line a = new Line();
         Assert.assertEquals(a.length(), 0);
-        a.add(p1);
+        a.addTo(p1);
         Assert.assertEquals(a.length(), 5);
-        a.add(p2);
+        a.addTo(p2);
         Assert.assertEquals(a.length(), 6);
-        a.add(p3);
+        a.addTo(p3);
         Assert.assertEquals(a.length(), 9);
     }
 
@@ -50,18 +50,18 @@ public class TestLine {
 
         Line line = new Line();
         try {
-            line.add(p1);
+            line.addTo(p1);
             Assert.fail("Expected IllegalArgumentException.");
         } catch (IllegalArgumentException e) {
             //Error caught, success
         }
         Assert.assertEquals(line.length(), 0);
 
-        line.add(p2);
+        line.addTo(p2);
         Assert.assertEquals(line.length(), 3);
 
         try {
-            line.add(p3);
+            line.addTo(p3);
             Assert.fail("Tried to insert null party.");
         } catch (NullPointerException e) {
             //Error caught, success
