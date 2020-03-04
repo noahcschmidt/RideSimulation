@@ -1,41 +1,26 @@
 public class TrackPiece {
     private double length;
     private int  difficulty;
-    private int nextTrack;
+    private TrackPiece nextTrack;
     private int car;
 
-    public TrackPiece(double length, int difficulty, int nextTrack, int car){
-        if(length <=0 || difficulty <=0 || nextTrack <=0){
-            throw new IllegalArgumentException();
+    public TrackPiece(double length, int difficulty, TrackPiece nextTrack, int car){
+        if(length <=0 ){
+            throw new IllegalArgumentException("The length must be greater than 0!");
+        }
+        if(difficulty <= 0){
+            throw new IllegalArgumentException("The difficulty must be greater than 0!");
+        }
+        if(nextTrack == null){
+            throw new IllegalArgumentException("The nextTrack must be greater than 0!");
+        }
+        if(car <= 0){
+            throw new IllegalArgumentException("The car must be greater than 0!");
         }
         this.length = length;
         this.difficulty = difficulty;
         this.nextTrack = nextTrack;
         this.car = car;
-    }
-
-    public TrackPiece(double length, int difficulty, int nextTrack){
-        if(length <=0 || difficulty <=0 || nextTrack<=0){
-            throw new IllegalArgumentException();
-        }
-        this.length=length;
-        this.difficulty = difficulty;
-        this.nextTrack = nextTrack;
-    }
-
-    public TrackPiece(double length, int difficulty){
-        if(length <=0 || difficulty<=0){
-           throw new IllegalArgumentException();
-        }
-        this.length = length;
-        this.difficulty = difficulty;
-    }
-
-    public TrackPiece(double length){
-        if(length <=0){
-            throw new IllegalArgumentException();
-        }
-        this.length = length;
     }
 
     public double getLength(){return length;}
@@ -48,8 +33,8 @@ public class TrackPiece {
         this.difficulty = difficulty;
     }
 
-    public int getNextTrack(){return nextTrack;}
-    public void setNextTrack(int nextTrack){
+    public TrackPiece getNextTrack(){return nextTrack;}
+    public void setNextTrack(TrackPiece nextTrack){
         this.nextTrack = nextTrack;
     }
 
