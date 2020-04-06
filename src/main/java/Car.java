@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.List;
 
 public class Car {
     public static final int SEATS = 12;
@@ -7,9 +8,9 @@ public class Car {
     private double weight;
     private double speed;
     private int number;
-    private LinkedList<Party> parties;
+    private List<Party> parties;
 
-    public Car(int number, LinkedList<Party> parties) {
+    public Car(int number, List<Party> parties) {
         if (number < 0) {
             throw new IllegalArgumentException("Car number cannot be negative.");
         }
