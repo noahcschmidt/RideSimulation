@@ -19,7 +19,6 @@ public class Car {
         this.number = number;
 
         if (parties == null) {
-            System.out.println("List of parties cannot be null. Creating list...");
             this.parties = new LinkedList<>();
         }
         else {
@@ -67,7 +66,7 @@ public class Car {
             parties.add(p);
         }
         else {
-            //TODO: error? IDK yet
+            throw new Error("Car cannot fit party.");
         }
     }
 

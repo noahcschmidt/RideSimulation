@@ -1,15 +1,13 @@
-package GUI;
-
 import javax.swing.*;
 import javax.swing.BorderFactory;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.concurrent.ConcurrentNavigableMap;
 
 public class GUI {
 
-    private static final int NUMBER_OF_TRACK_PIECES = 5;
+    private Simulation sim;
+
+    private static final int NUMBER_OF_TRACK_PIECES = 7;
 
     private JFrame window;
     private Container linePane;     //right side, holds line info
@@ -27,6 +25,8 @@ public class GUI {
 
 
     public GUI() {
+
+
         makeWindow();
         makeLeftSide();
         makeCenter();
@@ -59,7 +59,7 @@ public class GUI {
         for (int i = 0; i < NUMBER_OF_TRACK_PIECES; i++) {
             JPanel temp = new JPanel();
             temp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            temp.setSize(100, 30);
+            temp.setSize(100, 10);
             track.add(temp);
         }
 
@@ -83,6 +83,9 @@ public class GUI {
      */
     private void makeCenter() {
         stationPane = new Container();
+
+
+
         window.add(stationPane, BorderLayout.CENTER);
     }
 
