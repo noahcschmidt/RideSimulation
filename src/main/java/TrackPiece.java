@@ -63,8 +63,7 @@ public class TrackPiece {
 
     public void calcTime() {
         if (car != null) {
-            //timeLeft = (int) ((100 / car.getWeight()) * 10 + difficulty * 10 + length / 2);
-            timeLeft = 3;   //FIXME
+            timeLeft = (int) ((100 / car.getWeight()) * 10 + difficulty * 10 + length / 2);
         }
     }
 }
