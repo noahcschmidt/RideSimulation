@@ -12,12 +12,10 @@ public class TestParty {
         Party p2 = new Party(9, 400.56);
         Assert.assertEquals(p2.getNumPeople(), 9);
         Assert.assertEquals(p2.getWeight(), 400.56, 0.0001);
-        Assert.assertFalse(p2.isHandicapped());
 
-        Party p3 = new Party(3, 250.6, true);
+        Party p3 = new Party(3, 250.6);
         Assert.assertEquals(p3.getNumPeople(), 3);
         Assert.assertEquals(p3.getWeight(), 250.6, 0.0001);
-        Assert.assertTrue(p3.isHandicapped());
 
     }
 

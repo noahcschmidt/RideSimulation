@@ -1,4 +1,4 @@
-import javax.sound.midi.Track;
+import java.util.TimerTask;
 
 public class TrackPiece {
     private double length;
@@ -7,7 +7,7 @@ public class TrackPiece {
     private Car car;
     private int timeLeft;
 
-    public TrackPiece(double length, double difficulty, TrackPiece nextTrack){
+    public TrackPiece(double length, double difficulty, TrackPiece nextTrack) {
         if(length <=0 ){
             throw new IllegalArgumentException("Length must be greater than zero");
         }
@@ -18,26 +18,21 @@ public class TrackPiece {
         this.timeLeft = 0;
     }
 
-    public double getLength(){
-        return length;
+    public TrackPiece (double length, double difficulty) {
+        this(length, difficulty, null);
     }
 
-    public void setLength(double length){
-        this.length = length;
+    public double getLength(){
+        return length;
     }
 
     public double getDifficulty(){
         return difficulty;
     }
 
-    public void setDifficulty(double difficulty){
-        this.difficulty = difficulty;
-    }
-
     public TrackPiece getNextTrack() {
         return nextTrack;
     }
-
     public void setNextTrack(TrackPiece nextTrack){
         this.nextTrack = nextTrack;
     }
@@ -47,5 +42,29 @@ public class TrackPiece {
     }
     public void setCar(Car car){
         this.car = car;
+        calcTime();
+    }
+
+    public int getTime() {
+        return timeLeft;
+    }
+    public void setTime(int timeLeft) {
+        this.timeLeft = timeLeft;
+    }
+
+    public void timeDec() {
+        timeLeft--;
+        if (timeLeft <= 0) {
+            nextTrack.setCar(car);
+            nextTrack.calcTime();
+            this.car = null;
+        }
+    }
+
+    public void calcTime() {
+        if (car != null) {
+            //timeLeft = (int) ((100 / car.getWeight()) * 10 + difficulty * 10 + length / 2);
+            timeLeft = 3;   //FIXME
+        }
     }
 }

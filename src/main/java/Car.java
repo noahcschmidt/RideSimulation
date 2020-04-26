@@ -65,9 +65,8 @@ public class Car {
         if(getNumPeople() + p.getNumPeople() <= SEATS) {
             parties.add(p);
         }
-        else {
-            throw new Error("Car cannot fit party.");
-        }
+
+        setPartyWeights();
     }
 
     /**
@@ -91,5 +90,9 @@ public class Car {
         if (total > SEATS) {
             throw new IllegalArgumentException("List of parties cannot exceed number of seats: " + SEATS);
         }
+    }
+
+    public void clear() {
+        parties = new LinkedList<>();
     }
 }
