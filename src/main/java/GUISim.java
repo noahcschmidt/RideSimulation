@@ -37,6 +37,7 @@ public class GUISim extends Observable {
     //right
     private JLabel nextRiderLabel;
 
+    private JLabel timeEstimation;
 
     private JButton addButton;
     private JTextField partyNumberField;
@@ -46,7 +47,8 @@ public class GUISim extends Observable {
     private Timer timer;
     private TimerTask tick;
 
-    private static final int NUM_TRACKS = 8;
+    //Number of track pieces, including station
+    private static final int NUM_TRACKS = 12;
 
     public GUISim() {
         //Ride
@@ -54,19 +56,21 @@ public class GUISim extends Observable {
         station.addCar(new Car(1));
         station.addCar(new Car(2));
         station.addCar(new Car(3));
-        Car c = new Car(4);
-        c.addParty(new Party(5));
-        station.addCar(c);
+        station.addCar(new Car(4));
 
         track = new ArrayList<>();
-        track.add(station);
 
-        for(int i = 1; i <= NUM_TRACKS; i++) {
+        for(int i = 0; i <= NUM_TRACKS-1; i++) {
             TrackPiece t = new TrackPiece(30, 0);
-            track.get(i-1).setNextTrack(t);
+            if (track.isEmpty()) {
+                station.setNextTrack(t);
+            }
+            else {
+                track.get(i - 1).setNextTrack(t);
+            }
             track.add(t);
         }
-        track.get(NUM_TRACKS).setNextTrack(station);
+        track.get(NUM_TRACKS-1).setNextTrack(station);
 
         //GUI
         makeWindow();
@@ -101,7 +105,7 @@ public class GUISim extends Observable {
     /**
      * Creates the Left side of the GUI.
      */
-    public void makeLeftSide() {
+    private void makeLeftSide() {
         trackPane = new Container();
 
         //create containers for track pieces
@@ -109,7 +113,7 @@ public class GUISim extends Observable {
         trackLabels = new ArrayList<>();
 
         trackPane.add(new JLabel("TRACK"));
-        for (int i = 0; i < NUM_TRACKS; i++) {
+        for (int i = 0; i < NUM_TRACKS - 1; i++) {
             JPanel temp = new JPanel();
             temp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             temp.setPreferredSize(new Dimension(150,20));
@@ -192,6 +196,14 @@ public class GUISim extends Observable {
         temp.add(nextRiderLabel);
         nextRiders.add(temp);
 
+        temp = new JPanel();
+        temp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        temp.setPreferredSize(new Dimension(200, 50));
+
+        timeEstimation = new JLabel();
+        temp.add(timeEstimation);
+        nextRiders.add(temp);
+
         Container riderMiddleSection = new Container();     //holds nextRiders and estimated time
         riderMiddleSection.setLayout(new BoxLayout(riderMiddleSection, BoxLayout.X_AXIS));
         riderMiddleSection.setPreferredSize(new Dimension(300,300));
@@ -200,8 +212,6 @@ public class GUISim extends Observable {
         buttonSection.setLayout(new BoxLayout(buttonSection, BoxLayout.X_AXIS));
         buttonSection.setPreferredSize(new Dimension(300,30));
 
-        //MIDDLE SECTION
-        //Left boxes
 
         //Bottom Buttons
         partyNumberField = new JTextField("Num in Party");
@@ -230,7 +240,7 @@ public class GUISim extends Observable {
         @Override
         public void update(Observable o, Object arg) {
             //update track times and cars etc
-            for (int i = 0; i < NUM_TRACKS; i++) {
+            for (int i = 0; i < NUM_TRACKS-1; i++) {
                 TrackPiece t = track.get(i);
                 JLabel l = trackLabels.get(i);
                 String c = (t.getCar() == null) ? "_" : ""+t.getCar().getNumber();  //num if there is a car, x if not
@@ -246,7 +256,18 @@ public class GUISim extends Observable {
 
             //update next rider
             nextRiderLabel.setText((line.isEmpty()) ? "Queue empty." : "Next Party: " + line.peek().getNumPeople());
+
+            timeEstimation.setText("Estimated Wait Time: " + getTimeEstimation());
         }
+    }
+
+    private int getTimeEstimation() {
+        int peopleInLine = 0;
+        for(Party p : line) {
+            peopleInLine += p.getNumPeople();
+        }
+        int seconds = peopleInLine * (track.size() * 5);
+        return seconds/60;
     }
 
     private class Tick extends TimerTask {
@@ -267,14 +288,17 @@ public class GUISim extends Observable {
     private class DeployListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int i = station.getNumCars();
-            carLabels.get(i-1).setText("---");
+            //only deploy if first two track sections are empty
+            if (track.get(0).getCar() == null && track.get(1).getCar() == null) {
+                int i = station.getNumCars();
+                carLabels.get(i - 1).setText("---");
 
-            Car c = station.removeNextCar();
-            station.getNextTrack().setCar(c);
+                Car c = station.removeNextCar();
+                station.getNextTrack().setCar(c);
 
-            setChanged();
-            notifyObservers();
+                setChanged();
+                notifyObservers();
+            }
         }
     }
 
@@ -306,8 +330,10 @@ public class GUISim extends Observable {
             Car nextCar = station.getCar(station.getNumCars()-1);
             int numInCar = nextCar.getNumPeople();
             //if we can fit next party
-            if (numInCar + line.peek().getNumPeople() < Car.SEATS) {
-                nextCar.addParty(line.remove());
+            if (!line.isEmpty()) {
+                if (numInCar + line.peek().getNumPeople() <= Car.SEATS) {
+                    nextCar.addParty(line.remove());
+                }
             }
             setChanged();
             notifyObservers();
